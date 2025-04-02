@@ -4,6 +4,9 @@ import { getMenuQuery } from "./queries/menu";
 import { Menu, ShopifyMenuOperation } from "./types";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN ? ensureStartWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://') : ""
+
+type ExtractVariables<T> = T extends {variables: object} ? T["variables"] : never;
+
 export async function shopifyFetch<T>({
   cache = 'force-cache',
   headers,
