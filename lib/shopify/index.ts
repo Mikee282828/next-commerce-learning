@@ -1,9 +1,12 @@
-import { TAGS } from "../constants";
+import { SHOPIFY_GRAPHQL_API_ENDPOINT, TAGS } from "../constants";
 import { ensureStartWith } from "../utils";
 import { getMenuQuery } from "./queries/menu";
 import { Menu, ShopifyMenuOperation } from "./types";
 
 const domain = process.env.SHOPIFY_STORE_DOMAIN ? ensureStartWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://') : ""
+
+const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
+const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
 type ExtractVariables<T> = T extends {variables: object} ? T["variables"] : never;
 
@@ -24,9 +27,9 @@ export async function shopifyFetch<T>({
     const result = await fetch(endpoint, {
       method: "POST",
       headers: {
-        "Content-Type": "Application/json",
-        "X-Shopify-Storefront-Access-Token": KeyboardEvent,
-        ...header,
+        "Content-Type": "application/json",
+        "X-Shopify-Storefront-Access-Token": key,
+        ...headers,
       },
       body: JSON.stringify({
         ...(query && { query }),
