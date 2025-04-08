@@ -1,4 +1,5 @@
 import { SHOPIFY_GRAPHQL_API_ENDPOINT, TAGS } from "../constants";
+import { isShopifyError } from "../type-guards";
 import { ensureStartWith } from "../utils";
 import { getMenuQuery } from "./queries/menu";
 import { Menu, ShopifyMenuOperation } from "./types";
@@ -8,7 +9,9 @@ const domain = process.env.SHOPIFY_STORE_DOMAIN ? ensureStartWith(process.env.SH
 const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`
 const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 
-type ExtractVariables<T> = T extends {variables: object} ? T["variables"] : never;
+type ExtractVariables<T> = T extends {variables: object} // if it extends the object with variables as object
+? T["variables"]                         // extract the type inside variables
+: never;                                 // otherwise it's a type that never return
 
 export async function shopifyFetch<T>({
   cache = 'force-cache',

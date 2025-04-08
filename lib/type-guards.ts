@@ -5,12 +5,23 @@ export interface ShopifyErrorLike {
   cause: Error;
 }
 
-export function isObject(object: unknown): object is Record<string, unknown> {  // istead of returning boolean it returns wheter object is or is not a Record<string,unknown>
+export function isObject(object: unknown): object is Record<string, unknown> {
+
+  /*
+     1. **Type Predicate (`object is Record<string, unknown>`)**:
+     - The part `object is Record<string, unknown>` is the type predicate.
+     - It tells TypeScript that if `isObject` returns `true`, then the `object` 
+     parameter can safely be treated as a `Record<string, unknown>` (an object 
+     with string keys and unknown values) in the code that follows.
+  */
   return typeof object === 'object' && object !== null && !Array.isArray(object)
 }
 
-function findError<T extends object>(error : T) : boolean{
-  if(Object.prototype.toString.call(error) === '[object error]'){
+function findError<T extends object>(error: T): boolean {
+  /**
+   * it
+   */
+  if (Object.prototype.toString.call(error) === '[object Error]') {
     return true;
   }
 
@@ -21,6 +32,6 @@ function findError<T extends object>(error : T) : boolean{
 export function isShopifyError(error: unknown): error is ShopifyErrorLike {
   if (!isObject(error)) return false;
 
-  if(error instanceof Error) return true;
+  if (error instanceof Error) return true;
   return findError(error);
 }
