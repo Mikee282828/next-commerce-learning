@@ -1,14 +1,17 @@
 import { getMenu } from "@/lib/shopify";
 import { Menu } from "@/lib/shopify/types";
 import Link from "next/link";
+import MobileMenu from "./mobile-menu";
+import Search from "./search";
 
 export async function Navbar() {
+  const SITE_NAME = process.env.SITE_NAME;
   const menu = await getMenu("next-js-frontend-menu");
   console.log(menu);
   return (
     <nav className="flex items-center justify-between p-4 lg:px-6">
       <div className="block flex-none md:hidden">
-        <MobileMenu />
+        <MobileMenu menu={menu}/>
       </div>
       <div className="flex w-full items-center">
         <div className="flex w-full md:w-1/3">
