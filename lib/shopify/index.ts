@@ -69,7 +69,7 @@ export async function shopifyFetch<T>({
   }
 }
 
-export async function getMenu(handle: string): Promise<Menu[]> {
+export async function getMenu(handle: string): Promise<Menu[]> { // you can find it in content/menu
   const res = await shopifyFetch<ShopifyMenuOperation>({
     query: getMenuQuery,
     tags: [TAGS.collections],
