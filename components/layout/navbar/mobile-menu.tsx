@@ -3,9 +3,13 @@ import { Menu } from "@/lib/shopify/types";
 import { Dialog, DialogPanel, Transition, TransitionChild } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import Search from "./search";
 
 export default function MobileMenu({ menu }: { menu: Menu[] }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const openMobileMenu = () => setIsOpen(true);
+  const closeMobileMenu = () => setIsOpen(false);
   return (
     <>
       <button
